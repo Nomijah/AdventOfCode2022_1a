@@ -3,6 +3,8 @@ string input = "7769\r\n6798\r\n11685\r\n10826\r\n11807\r\n5786\r\n7932\r\n\r\n5
 string[] stringArray = input.Split("\r\n\r\n");
 int total = 0;
 int biggestNumber = 0;
+int secondBiggestNumber = 0;
+int thirdBiggestNumber = 0;
 foreach (string s in stringArray)
 {
     string[] elfStringArray = s.Split("\r\n");
@@ -11,14 +13,28 @@ foreach (string s in stringArray)
         int stringToInt = Convert.ToInt32(a);
         total += stringToInt;
     }
+    if (biggestNumber != 0 && secondBiggestNumber != 0 &&
+        total > thirdBiggestNumber && total < secondBiggestNumber)
+    {
+        thirdBiggestNumber = total;
+    }
+    if (biggestNumber != 0 && 
+        total > secondBiggestNumber && total < biggestNumber)
+    {
+        thirdBiggestNumber = secondBiggestNumber;
+        secondBiggestNumber = total;
+    }
     if (total > biggestNumber)
     {
+        thirdBiggestNumber = secondBiggestNumber;
+        secondBiggestNumber = biggestNumber;
         biggestNumber = total;
         total = 0;
     }
+
     else
     {
         total = 0;
     }
 }
-Console.WriteLine(biggestNumber);
+Console.WriteLine(biggestNumber + secondBiggestNumber + thirdBiggestNumber);
